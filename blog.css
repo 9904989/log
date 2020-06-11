@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900');
+
+h1 {
+    font-family: 'Poppins', sans-serif;
+    padding-left: 30px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
+.poop {
+    height: 5%;
+    width: 5%;
+    
+}

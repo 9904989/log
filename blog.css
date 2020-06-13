@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900');
 
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
 h1 {
     font-family: 'Poppins', sans-serif;
     padding-left: 30px;
@@ -23,7 +27,7 @@ h1 {
 .blog_entry {
     /* border-bottom: 0.5px solid grey; */
     display: grid;
-    grid-template-columns: 1fr 1fr 2fr;
+    grid-template-columns: 1fr 1fr 3fr;
     justify-content: center;
     align-content: center;
     max-width: 480px;
@@ -33,10 +37,20 @@ h1 {
 
 
 .blog_entry > div {
-    background: #eee;
+    /*background: #eee;*/
     padding: 1em;
 }
 
-.blog_entry > div:nth-child(odd) {
+/*.blog_entry > div:nth-child(odd) {
     background: #ddd;
+}*/
+
+.time {
+    background: black;
+    color: white;
+}
+
+.blog_entry > div > img {
+    width: 100%;
+    height: auto;
 }

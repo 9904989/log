@@ -4,6 +4,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
+/*body {
+    min-height: 100vh;
+}*/
+
 h1 {
     font-family: 'Poppins', sans-serif;
     padding-left: 30px;
@@ -53,4 +57,10 @@ h1 {
 .blog_entry > div > img {
     width: 100%;
     height: auto;
+}
+
+.container#blur.blur {
+    filter: blur(5px);
+    pointer-events: none;
+    user-select: none;
 }

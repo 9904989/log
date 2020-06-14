@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="blog.css">
+    <link rel="stylesheet" href="call_to_action_button.css">
     <title>Blog Idea</title>
 </head>
 <body>
+    <div class="container" id="blur">
     <div class="header">
         <img class="logo" src="evie.jpg">
         <h1>Evie's Log</h1>
@@ -48,5 +50,24 @@
             <div class="comment">5hrs since last feed</div>
         </div>
     </div>
+    </div>
+    <div class="action" onclick="actionToggle();">
+        <span>+</span>
+        <ul>
+            <li>Bottle</li>
+            <li>Poopy</li>
+            <li>Wet</li>
+            <li>Comment</li>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        function actionToggle() {
+            var blur = document.getElementById('blur');
+            blur.classList.toggle('blur');
+            var action = document.querySelector('.action');
+            action.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>

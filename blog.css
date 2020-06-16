@@ -28,7 +28,7 @@ h1 {
     filter: grayscale(100%);
 }
 
-.blog_entry {
+.log_entry {
     /* border-bottom: 0.5px solid grey; */
     display: grid;
     grid-template-columns: 1fr 1fr 3fr;
@@ -40,12 +40,12 @@ h1 {
 }
 
 
-.blog_entry > div {
+.log_entry > div {
     /*background: #eee;*/
     padding: 1em;
 }
 
-/*.blog_entry > div:nth-child(odd) {
+/*.log_entry > div:nth-child(odd) {
     background: #ddd;
 }*/
 
@@ -54,7 +54,7 @@ h1 {
     color: white;
 }
 
-.blog_entry > div > img {
+.log_entry > div > img {
     width: 100%;
     height: auto;
 }

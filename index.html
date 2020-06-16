@@ -13,38 +13,38 @@
         <img class="logo" src="evie.jpg">
         <h1>Evie's Log</h1>
     </div>
-    <div class="content">
-        <div class="blog_entry">
+    <div class="content" id="log_entries">
+        <div class="log_entry" onclick="edit_log_entry(this);">
             <div class="time">0000</div>
             <div class="volume">70ml bottle</div>
             <div class="comment">4hrs since last feed</div>
         </div>
-        <div class="blog_entry">
+        <div class="log_entry">
             <div class="time">0030</div>
             <div class="icon"><img src="nappy_dirty.png"></div>
             <div class="comment">4.5hrs since last change</div>
         </div>
-        <div class="blog_entry">
+        <div class="log_entry">
             <div class="time">0400</div>
             <div class="volume">40ml bottle</div>
             <div class="comment">4hrs since last feed</div>
         </div>
-        <div class="blog_entry">
+        <div class="log_entry">
             <div class="time">0500</div>
             <div class="icon"><img src="nappy_wet.png"></div>
             <div class="comment">4.5hrs since last change</div>
         </div>
-        <div class="blog_entry">
+        <div class="log_entry">
             <div class="time">0530</div>
             <div class="volume">30ml bottle</div>
             <div class="comment">4hrs since last feed</div>
         </div>
-        <div class="blog_entry">
+        <div class="log_entry">
             <div class="time">0700</div>
             <div class="icon"><img src="nappy_wet.png"></div>
             <div class="comment">2hrs since last change</div>
         </div>
-        <div class="blog_entry">
+        <div class="log_entry">
             <div class="time">1030</div>
             <div class="volume">70ml bottle</div>
             <div class="comment">5hrs since last feed</div>
@@ -55,8 +55,8 @@
         <span>+</span>
         <ul>
             <li>Bottle</li>
-            <li>Poopy</li>
-            <li>Wet</li>
+            <li onclick="addEntry('nappy_dirty.png');">Poopy</li>
+            <li onclick="addEntry('nappy_wet.png');">Wet</li>
             <li>Comment</li>
         </ul>
     </div>
@@ -67,6 +67,46 @@
             blur.classList.toggle('blur');
             var action = document.querySelector('.action');
             action.classList.toggle('active');
+        }
+        function addEntry(icon) {
+            // create new blog entry
+            new_entry = document.createElement("div");
+            new_entry.classList.add("log_entry");
+
+            new_entry_time = document.createElement("div");
+            new_entry_time.classList.add("time");
+            var d = new Date();
+            new_entry_time.innerText = addZero(d.getHours()) + "" + addZero(d.getMinutes());
+            new_entry.appendChild(new_entry_time);
+
+            new_entry_icon = document.createElement("div");
+            new_entry_icon.classList.add("icon");
+            new_icon = document.createElement("img");
+            new_icon.src = icon;
+            new_entry_icon.appendChild(new_icon);
+            new_entry.appendChild(new_entry_icon);
+
+            new_entry_comment = document.createElement("div");
+            new_entry_comment.classList.add("comment");
+            new_entry_comment.innerText = '4hrs since last change';
+            new_entry.appendChild(new_entry_comment);
+            
+            //add new entry to start of content <div>
+            var log_entries = document.getElementById("log_entries");
+            log_entries.insertBefore(new_entry, log_entries.childNodes[0]);
+        }
+
+        function addZero(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
+        }
+
+        function edit_log_entry(e) {
+            e = e || window.event;
+            var src = e.target || e.srcElement;
+            alert(e.innerText);
         }
     </script>
 </body>

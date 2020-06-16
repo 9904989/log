@@ -68,10 +68,12 @@
             var action = document.querySelector('.action');
             action.classList.toggle('active');
         }
+
         function addEntry(icon) {
             // create new blog entry
             new_entry = document.createElement("div");
             new_entry.classList.add("log_entry");
+            new_entry.setAttribute("onclick","edit_log_entry(this);");
 
             new_entry_time = document.createElement("div");
             new_entry_time.classList.add("time");

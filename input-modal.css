@@ -15,6 +15,7 @@
 .show-input-modal {
     visibility: visible;
     opacity: 1;
+    transition: 0.3s;
 }
 
 .input-modal {
@@ -55,6 +56,10 @@
 }
 
 .input-modal #edit_volume {
+    display: none;
+}
+
+.input-modal #modal_timestamp {
     display: none;
 }
 

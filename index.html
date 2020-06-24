@@ -69,7 +69,8 @@
             <h2>Edit Log Entry</h2>
             <input type="time" id="edit_time" name="time_entry" value="01:00">
             <input type="date" id="edit_date" name="date_entry" value="2020-06-20">
-            <!--<div><input inputmode="numeric" pattern="[0-9]*" type="text" id="edit_volume" name="volume_entry" value="" size ="3" maxlength="3"> ml</div>  onclick="delete_log_entry(this);"-->
+            <div id="edit_volume"><input inputmode="numeric" pattern="[0-9]*" type="text" name="volume_entry" value="" size ="3" maxlength="3"> ml</div>
+            <textarea rows="5" cols="10" placeholder="Comments" maxlength="120"></textarea>
             <input type="button" id="update_log" class="input-button" onclick="alert('Update Log');" value="Update Entry">
             <input type="button" id="delete_log" class="input-button" onclick="alert('Delete Log');" value="Delete Entry">
             <span class="input-modal-close" onclick="close_Input_Modal();">X</span>

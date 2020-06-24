@@ -21,13 +21,23 @@
     position: relative;
     background-color: white;
     width: 250px;
-    height: 400px;
+    height: 450px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
     border-radius: 25px;
     box-shadow: 0 5px 10px rgba(0,0,0,.30);
+}
+
+.input-modal textarea { 
+    resize: none;
+    border: none;
+    box-shadow: 0 5px 10px rgba(0,0,0,.30);
+}
+
+.input-modal #edit_volume {
+    display: none;
 }
 
 .input-button {
@@ -42,7 +52,7 @@
 .input-modal #delete_log {
     color: black;
     background-color: white;
-    text-decoration: underline;
+    /*text-decoration: underline;*/
 }
 
 .input-modal #update_log {

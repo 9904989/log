@@ -22,6 +22,7 @@
     background-color: white;
     width: 310px;
     height: 420px;
+    top: -20px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -49,7 +50,7 @@
 }
 
 .input-modal #comments {
-    width: 80%;
+    width: 85%;
     box-shadow: 0 5px 10px rgba(0,0,0,.30);
 }
 

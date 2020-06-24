@@ -64,9 +64,12 @@
             <li>Comment</li>
         </ul>
     </div>
-    <div class="input-modal-bg"> <!--onclick="close_Input_Modal();">-->
+    <div class="input-modal-bg">
         <div class="input-modal">
-            <h2>Go Modal!!</h2>
+            <h2>Edit Log Entry</h2>
+            <input type="time" id="edit_time" name="time_entry" value="01:00">
+            <input type="date" id="edit_date" name="date_entry" value="2020-06-20">
+            <!--<div><input inputmode="numeric" pattern="[0-9]*" type="text" id="edit_volume" name="volume_entry" value="" size ="3" maxlength="3"> ml</div>-->
             <button onclick="delete_log_entry(this);">Delete Entry</button>
             <span class="input-modal-close" onclick="close_Input_Modal();">X</span>
         </div>

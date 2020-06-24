@@ -4,64 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="blog.css">
+    <link rel="stylesheet" href="input-modal.css">
     <link rel="stylesheet" href="call_to_action_button.css">
+    <script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.6.0/stitch.js"></script>
     <title>Blog Idea</title>
 </head>
-<body>
+<body onload="display_log_entries_on_load();">
     <div class="container" id="blur">
-    <div class="header">
-        <img class="logo" src="evie.jpg">
-        <h1>Evie's Log</h1>
-    </div>
-    <div class="content" id="log_entries">
-        <div class="log_entry" onclick="edit_log_entry(this);">
-            <div class="time">0000</div>
-            <div class="volume">70ml bottle</div>
-            <div class="comment">4hrs since last feed</div>
+        <div class="header">
+            <img class="logo" src="evie.jpg">
+            <h1>Evie's Log</h1>
         </div>
-        <div class="log_entry">
-            <div class="time">0030</div>
-            <div class="icon"><img src="nappy_dirty.png"></div>
-            <div class="comment">4.5hrs since last change</div>
+        <div class="content" id="log_entries">
+            <!--<div class="log_entry" onclick="edit_log_entry(this);">
+                <div class="time">00:00</div>
+                <div class="volume">70ml bottle</div>
+                <div class="comment">4hrs since last feed</div>
+            </div>
+            <div class="log_entry">
+                <div class="time">00:30</div>
+                <div class="icon"><img src="nappy_dirty.png"></div>
+                <div class="comment">4.5hrs since last change</div>
+            </div>
+            <div class="log_entry">
+                <div class="time">0400</div>
+                <div class="volume">40ml bottle</div>
+                <div class="comment">4hrs since last feed</div>
+            </div>
+            <div class="log_entry">
+                <div class="time">0500</div>
+                <div class="icon"><img src="nappy_wet.png"></div>
+                <div class="comment">4.5hrs since last change</div>
+            </div>
+            <div class="log_entry">
+                <div class="time">0530</div>
+                <div class="volume">30ml bottle</div>
+                <div class="comment">4hrs since last feed</div>
+            </div>
+            <div class="log_entry">
+                <div class="time">0700</div>
+                <div class="icon"><img src="nappy_wet.png"></div>
+                <div class="comment">2hrs since last change</div>
+            </div>
+            <div class="log_entry">
+                <div class="time">1030</div>
+                <div class="volume">70ml bottle</div>
+                <div class="comment">5hrs since last feed</div>
+            </div>
+        </div>-->
         </div>
-        <div class="log_entry">
-            <div class="time">0400</div>
-            <div class="volume">40ml bottle</div>
-            <div class="comment">4hrs since last feed</div>
-        </div>
-        <div class="log_entry">
-            <div class="time">0500</div>
-            <div class="icon"><img src="nappy_wet.png"></div>
-            <div class="comment">4.5hrs since last change</div>
-        </div>
-        <div class="log_entry">
-            <div class="time">0530</div>
-            <div class="volume">30ml bottle</div>
-            <div class="comment">4hrs since last feed</div>
-        </div>
-        <div class="log_entry">
-            <div class="time">0700</div>
-            <div class="icon"><img src="nappy_wet.png"></div>
-            <div class="comment">2hrs since last change</div>
-        </div>
-        <div class="log_entry">
-            <div class="time">1030</div>
-            <div class="volume">70ml bottle</div>
-            <div class="comment">5hrs since last feed</div>
-        </div>
-    </div>
     </div>
     <div class="action" onclick="actionToggle();">
         <span>+</span>
         <ul>
+            <!--<li onclick="addEntry('bottle');">Bottle</li>-->
             <li>Bottle</li>
             <li onclick="addEntry('nappy_dirty.png');">Poopy</li>
             <li onclick="addEntry('nappy_wet.png');">Wet</li>
             <li>Comment</li>
         </ul>
     </div>
-
+    <div class="input-modal-bg" onclick="close_Input_Modal();">
+        <div class="input-modal">
+            <h2>Go Modal!!</h2>
+            <button onclick="delete_log_entry(this);">Delete Entry</button>
+            <span class="input-modal-close" onclick="close_Input_Modal();">X</span>
+        </div>
+    </div>
     <script type="text/javascript">
+        const client = stitch.Stitch.initializeDefaultAppClient('evie_tracker-qprfn');
+        const db = client.getServiceClient(stitch.RemoteMongoClient.factory, 'mongodb-atlas').db('log_entries');
+        const blog_entry = "";
+        
+        function display_log_entries_on_load() {
+            client.auth
+            .loginWithCredential(new stitch.AnonymousCredential())
+            .then(generate_log_entries)
+            .catch(console.error);
+        }
+
         function actionToggle() {
             var blur = document.getElementById('blur');
             blur.classList.toggle('blur');
@@ -69,33 +90,85 @@
             action.classList.toggle('active');
         }
 
-        function addEntry(icon) {
-            // create new blog entry
+    //Create new Log Entry
+        function addEntry(icon_value) {
+            //set up default values
+            var d = new Date();
+            var time_value = addZero(d.getHours()) + ":" + addZero(d.getMinutes());
+            var comment_value = '4hrs since last change';
+            var timestamp_value = Date.now();
+            var date_value = d.getFullYear()+"-"+addZero(d.getMonth()+1)+"-"+addZero(d.getUTCDate());
+
+            //insert new log entry into mongo { owner_id : client.auth.user.id }
+            db.collection('test').insertOne({'time': time_value, 'icon': icon_value, 'comment': comment_value, 'timestamp': timestamp_value, 'blog_date': date_value });
+
+            //generate DOM Elements
             new_entry = document.createElement("div");
             new_entry.classList.add("log_entry");
             new_entry.setAttribute("onclick","edit_log_entry(this);");
 
             new_entry_time = document.createElement("div");
             new_entry_time.classList.add("time");
-            var d = new Date();
-            new_entry_time.innerText = addZero(d.getHours()) + "" + addZero(d.getMinutes());
+            new_entry_time.innerText = time_value;
             new_entry.appendChild(new_entry_time);
 
             new_entry_icon = document.createElement("div");
             new_entry_icon.classList.add("icon");
             new_icon = document.createElement("img");
-            new_icon.src = icon;
+            new_icon.src = icon_value;
             new_entry_icon.appendChild(new_icon);
             new_entry.appendChild(new_entry_icon);
 
             new_entry_comment = document.createElement("div");
             new_entry_comment.classList.add("comment");
-            new_entry_comment.innerText = '4hrs since last change';
+            //calculate time since last change
+            new_entry_comment.innerText = comment_value;
             new_entry.appendChild(new_entry_comment);
+
+            new_entry_timestamp = document.createElement("div");
+            new_entry_timestamp.classList.add("timestamp");
+            new_entry_timestamp.innerText = timestamp_value;
+            new_entry.appendChild(new_entry_timestamp);
             
+            new_entry_date = document.createElement("div");
+            new_entry_date.classList.add("blog_date");
+            new_entry_date.innerText = date_value;
+            new_entry.appendChild(new_entry_date);
+
             //add new entry to start of content <div>
             var log_entries = document.getElementById("log_entries");
             log_entries.insertBefore(new_entry, log_entries.childNodes[0]);
+        }
+
+        //Read log entries
+        function generate_log_entries() {
+            db.collection('test')
+            .find({}, {limit: 1000})
+            //.sort( {'blog_date': 1} )
+            .toArray()
+            .then(docs => {
+                const html = "";
+                document.getElementById("log_entries").innerHTML = docs.map(doc =>
+                (doc.icon == "bottle") ? 
+                //add a feed entry
+                '<div class="log_entry" onclick="edit_log_entry(this);">'
+                +`<div class="time">${doc.time}</div>`
+                +`<div class="volume">${doc.volume}</div>`
+                +`<div class="comment">${doc.comment}</div>`
+                +`<div class="timestamp">${doc.timestamp}</div>`
+                +`<div class="blog_date">${doc.blog_date}</div>`
+                +`</div>`
+                :
+                //add a nappy entrys
+                '<div class="log_entry" onclick="edit_log_entry(this);">'
+                +`<div class="time">${doc.time}</div>`
+                +`<div class="icon"><img src=${doc.icon}></div>`
+                +`<div class="comment">${doc.comment}</div>`
+                +`<div class="timestamp">${doc.timestamp}</div>`
+                +`<div class="blog_date">${doc.blog_date}</div>`
+                +`</div>`
+                ).join(' ');
+            });
         }
 
         function addZero(i) {
@@ -108,7 +181,33 @@
         function edit_log_entry(e) {
             e = e || window.event;
             var src = e.target || e.srcElement;
-            alert(e.innerText);
+            document.querySelector('.input-modal-bg').classList.toggle('show-input-modal');
+            //delete_log_entry(e);
+            //db.collection('test')
+            //.updateOne({"timestamp": Number(e.querySelector('.timestamp').innerText)}, {$set:{"comment":"Updated Comments"}}, {upsert:true})
+            //.then(() => { 
+            //    alert("updated document with timestamp: " + e.querySelector('.timestamp').innerText); 
+            //})    
+            //.catch(err => {
+            //});
+        }
+
+        function close_Input_Modal() {
+            document.querySelector('.input-modal-bg').classList.toggle('show-input-modal');
+        }
+
+        //delete log entry from mongo
+        function delete_log_entry(e) {
+            var confirm_delete = confirm("Delete Log Entry?")
+            if(confirm_delete==true) {
+                db.collection('test')
+                .deleteOne({"timestamp": Number(e.querySelector('.timestamp').innerText)})
+                .then(() => { 
+                    e.remove();
+                })    
+                .catch(err => {
+                });
+            }
         }
     </script>
 </body>

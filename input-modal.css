@@ -21,19 +21,34 @@
     position: relative;
     background-color: white;
     width: 250px;
-    height: 250px;
+    height: 400px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
+    border-radius: 25px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.30);
 }
 
-.input-modal button {
+.input-button {
     padding: 10px 30px;
-    background-color: #298069;
-    color: white;
+    margin: 5px;
     border: none;
     cursor: pointer;
+    width: 200px;
+    border-radius: 25px;
+}
+
+.input-modal #delete_log {
+    color: black;
+    background-color: white;
+    text-decoration: underline;
+}
+
+.input-modal #update_log {
+    color: white;
+    background-color: black;
+
 }
 
 .input-modal-close {
@@ -47,4 +62,6 @@
 
 input {
     font-size: 20px;
+    border: none;
+    box-shadow: 0 5px 10px rgba(0,0,0,.30);
 }

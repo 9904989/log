@@ -67,7 +67,8 @@ h1 {
     height: auto;
 }
 
-.container#blur.blur {
+/*.container#blur.blur {*/
+.blur {
     filter: blur(5px);
     pointer-events: none;
     user-select: none;

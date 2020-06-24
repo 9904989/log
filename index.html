@@ -64,7 +64,7 @@
             <li>Comment</li>
         </ul>
     </div>
-    <div class="input-modal-bg" onclick="close_Input_Modal();">
+    <div class="input-modal-bg"> <!--onclick="close_Input_Modal();">-->
         <div class="input-modal">
             <h2>Go Modal!!</h2>
             <button onclick="delete_log_entry(this);">Delete Entry</button>
@@ -181,6 +181,9 @@
         function edit_log_entry(e) {
             e = e || window.event;
             var src = e.target || e.srcElement;
+            //document.querySelector('.blur-on-input').classList.toggle('blur-background-elements');
+            document.getElementById('blur').classList.toggle('blur');
+            document.querySelector('.action').classList.toggle('blur');
             document.querySelector('.input-modal-bg').classList.toggle('show-input-modal');
             //delete_log_entry(e);
             //db.collection('test')
@@ -193,6 +196,8 @@
         }
 
         function close_Input_Modal() {
+            document.getElementById('blur').classList.toggle('blur');
+            document.querySelector('.action').classList.toggle('blur');
             document.querySelector('.input-modal-bg').classList.toggle('show-input-modal');
         }
 

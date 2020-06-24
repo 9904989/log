@@ -20,8 +20,8 @@
 .input-modal {
     position: relative;
     background-color: white;
-    width: 300px;
-    height: 400px;
+    width: 310px;
+    height: 420px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -34,7 +34,7 @@
     display: flex;
     width: 100%;
     flex-direction: row;
-    /*justify-content: space-around;*/
+    justify-content: center;
 }
 
 .input-modal #time_and_date input {
@@ -45,9 +45,11 @@
     resize: none;
     border: none;
     font-size: 20px;
+    width: 100%;
 }
 
 .input-modal #comments {
+    width: 80%;
     box-shadow: 0 5px 10px rgba(0,0,0,.30);
 }
 

@@ -21,7 +21,7 @@
     position: relative;
     background-color: white;
     width: 350px;
-    height: 500px;
+    height: 450px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -30,10 +30,24 @@
     box-shadow: 0 5px 10px rgba(0,0,0,.30);
 }
 
+.input-modal #time_and_date {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    /*justify-content: space-around;*/
+}
+
+.input-modal #time_and_date input {
+    margin: 10px;
+}
+
 .input-modal textarea { 
     resize: none;
     border: none;
     font-size: 20px;
+}
+
+.input-modal #comments {
     box-shadow: 0 5px 10px rgba(0,0,0,.30);
 }
 

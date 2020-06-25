@@ -21,7 +21,7 @@
 .input-modal {
     position: relative;
     background-color: white;
-    width: 310px;
+    width: 320px;
     height: 420px;
     top: -30px;
     display: flex;
@@ -35,10 +35,10 @@
 .input-modal #time_and_date {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 85%;
 }
 
-.input-modal #time_and_date input {
+.input-modal #edit_date {
     margin-left: 20px;
 }
 

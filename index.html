@@ -58,10 +58,10 @@
         <span>+</span>
         <ul>
             <!--<li onclick="addEntry('bottle');">Bottle</li>-->
-            <li>Bottle</li>
-            <li onclick="addEntry('nappy_dirty.png');">Poopy</li>
-            <li onclick="addEntry('nappy_wet.png');">Wet</li>
-            <li>Comment</li>
+            <li onclick="addEntry('bottle');"><img class="popup_icon" src='bottle.png'> Bottle</li>
+            <li onclick="addEntry('nappy_dirty.png');"><img class="popup_icon" src='nappy_dirty.png'> Poopy</li>
+            <li onclick="addEntry('nappy_wet.png');"><img class="popup_icon" src='nappy_wet.png'> Wet</li>
+            <li><img class="popup_icon" src='message.png'> Comment</li>
         </ul>
     </div>
     <div class="input-modal-bg">
@@ -104,6 +104,7 @@
             //set up default values
             var d = new Date();
             var time_value = addZero(d.getHours()) + ":" + addZero(d.getMinutes());
+            var volume_value = '0ml Bottle';
             var comment_value = '';
             var timestamp_value = Date.now();
             var date_value = d.getFullYear()+"-"+addZero(d.getMonth()+1)+"-"+addZero(d.getUTCDate());
@@ -121,13 +122,19 @@
             new_entry_time.innerText = time_value;
             new_entry.appendChild(new_entry_time);
 
-            new_entry_icon = document.createElement("div");
-            new_entry_icon.classList.add("icon");
-            new_icon = document.createElement("img");
-            new_icon.src = icon_value;
-            new_entry_icon.appendChild(new_icon);
-            new_entry.appendChild(new_entry_icon);
-
+            if(icon_value="bottle") {
+                new_entry_volume = document.createElement("div");
+                new_entry_volume.classList.add("volume");
+                new_entry_volume.innerText = volume_value;
+                new_entry.appendChild(new_entry_volume);
+            } else {
+                new_entry_icon = document.createElement("div");
+                new_entry_icon.classList.add("icon");
+                new_icon = document.createElement("img");
+                new_icon.src = icon_value;
+                new_entry_icon.appendChild(new_icon);
+                new_entry.appendChild(new_entry_icon);
+            }
             new_entry_comment = document.createElement("div");
             new_entry_comment.classList.add("comment");
             //calculate time since last change
@@ -149,7 +156,7 @@
             log_entries.insertBefore(new_entry, log_entries.childNodes[0]);
         }
 
-        //Read log entries
+        //Read log entries from mongo
         function generate_log_entries() {
             db.collection('test')
             .find({}, {limit: 1000})

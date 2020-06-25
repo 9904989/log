@@ -110,7 +110,11 @@
             var date_value = d.getFullYear()+"-"+addZero(d.getMonth()+1)+"-"+addZero(d.getUTCDate());
 
             //insert new log entry into mongo { owner_id : client.auth.user.id }
-            db.collection('test').insertOne({'time': time_value, 'icon': icon_value, 'comment': comment_value, 'timestamp': timestamp_value, 'blog_date': date_value });
+            if(icon_value="bottle") {
+                db.collection('test').insertOne({'time': time_value, 'icon': icon_value, 'volume': volume_value, 'comment': comment_value, 'timestamp': timestamp_value, 'blog_date': date_value });
+            } else {
+                db.collection('test').insertOne({'time': time_value, 'icon': icon_value, 'comment': comment_value, 'timestamp': timestamp_value, 'blog_date': date_value });
+            }
 
             //generate DOM Elements
             new_entry = document.createElement("div");

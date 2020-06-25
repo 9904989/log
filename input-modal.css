@@ -21,7 +21,7 @@
 .input-modal {
     position: relative;
     background-color: white;
-    width: 320px;
+    width: 310px;
     height: 420px;
     top: -30px;
     display: flex;
@@ -44,6 +44,7 @@
 
 .input-modal textarea { 
     resize: none;
+    padding: none;
     border: none;
     font-size: 20px;
     width: 100%;
@@ -64,6 +65,7 @@
 .input-modal #volume {
     width: 55px;
     text-align: center;
+    box-shadow: 0 5px 10px rgba(0,0,0,.30);
 }
 
 .input-modal #modal_timestamp {

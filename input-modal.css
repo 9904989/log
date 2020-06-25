@@ -22,7 +22,7 @@
     position: relative;
     background-color: white;
     width: 310px;
-    height: 420px;
+    height: 450px;
     top: -30px;
     display: flex;
     justify-content: space-around;
@@ -63,19 +63,24 @@
     display: none;
 }
 
+.input-modal .input-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
 .input-button {
     padding: 10px 30px;
     margin: 5px;
     border: none;
     cursor: pointer;
-    width: 200px;
+    /*width: 200px;*/
     border-radius: 25px;
 }
 
 .input-modal #delete_log {
-    color: black;
+    color: red;
     background-color: white;
-    /*text-decoration: underline;*/
 }
 
 .input-modal #update_log {

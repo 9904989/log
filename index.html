@@ -67,9 +67,11 @@
     <div class="input-modal-bg">
         <div class="input-modal">
             <h2>Edit Log Entry</h2>
+            <div id="time_and_date">
+                <input type="time" id="edit_time" name="time_entry" value="01:00">
+                <input type="date" id="edit_date" name="date_entry" value="2020-06-20">
+            </div>
             <div id="edit_volume"><input inputmode="numeric" id="volume" pattern="[0-9]*" type="text" name="volume_entry" value="" size ="3" maxlength="3"> ml</div>
-            <div id="time_and_date"><input type="time" id="edit_time" name="time_entry" value="01:00">
-            <input type="date" id="edit_date" name="date_entry" value="2020-06-20"></div>
             <div id="comments"><textarea id="edit_comment" rows="4" placeholder="Comments" maxlength="90"></textarea></div>
             <div id="modal_timestamp"></div>
             <div id="input-buttons">

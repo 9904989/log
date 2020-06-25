@@ -22,7 +22,7 @@
     position: relative;
     background-color: white;
     width: 310px;
-    height: 450px;
+    height: 420px;
     top: -30px;
     display: flex;
     justify-content: space-around;
@@ -34,13 +34,12 @@
 
 .input-modal #time_and_date {
     display: flex;
-    width: 100%;
     flex-direction: row;
-    justify-content: center;
+    width: 85%;
 }
 
 .input-modal #time_and_date input {
-    margin: 10px;
+    margin-right: 20px;
 }
 
 .input-modal textarea { 
@@ -56,7 +55,15 @@
 }
 
 .input-modal #edit_volume {
+    width: 85%;
     display: none;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.input-modal #volume {
+    width: 55px;
+    text-align: center;
 }
 
 .input-modal #modal_timestamp {
@@ -74,7 +81,6 @@
     margin: 5px;
     border: none;
     cursor: pointer;
-    /*width: 200px;*/
     border-radius: 25px;
 }
 

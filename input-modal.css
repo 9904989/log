@@ -35,7 +35,7 @@
 .input-modal #time_and_date {
     display: flex;
     flex-direction: row;
-    width: 85%;
+    /*width: 85%;*/
 }
 
 .input-modal #time_and_date input {

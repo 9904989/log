@@ -35,11 +35,11 @@
 .input-modal #time_and_date {
     display: flex;
     flex-direction: row;
-    /*width: 85%;*/
+    width: 100%;
 }
 
 .input-modal #time_and_date input {
-    margin-right: 20px;
+    margin-left: 20px;
 }
 
 .input-modal textarea { 

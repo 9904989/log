@@ -153,7 +153,7 @@
         function generate_log_entries() {
             db.collection('test')
             .find({}, {limit: 1000})
-            //.sort( {'blog_date': 1} )
+            //.sort( {"timestamp": 1} )
             .toArray()
             .then(docs => {
                 const html = "";
@@ -177,6 +177,8 @@
                 +`<div class="blog_date">${doc.blog_date}</div>`
                 +`</div>`
                 ).join(' ');
+            }).catch(err => {
+                alert("Soz mannie, I'm nae able to sort these bitches!");
             });
         }
 

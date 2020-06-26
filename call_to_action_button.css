@@ -82,10 +82,10 @@ body {
 
 .action ul li img {
     margin-right: 10px;
-    opacity: 0.2;
+    /*opacity: 0.2;*/
     transform: scale(0.8);
 }
 
-.action ul li:hover img {
+/*.action ul li:hover img {
     opacity: 0.8;
-}
+}*/

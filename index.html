@@ -41,7 +41,7 @@
                 <input type="time" id="edit_time" name="time_entry" value="01:00">
                 <input type="date" id="edit_date" name="date_entry" value="2020-06-20">
             </div>
-            <div id="edit_volume"><input inputmode="numeric" id="volume" pattern="[0-9]*" type="text" name="volume_entry" value="" size ="3" maxlength="3"> ml</div>
+            <div id="edit_volume"><input inputmode="numeric" id="volume" pattern="[0-9]*" type="text" name="volume_entry" onfocus="this.value=''" onblur="check_volume();" value="" size ="3" maxlength="3"> ml</div>
             <div id="comments"><textarea id="edit_comment" rows="4" placeholder="Comments" maxlength="90"></textarea></div>
             <div id="modal_timestamp"></div>
             <div id="input-buttons">
@@ -75,6 +75,13 @@
             document.getElementById('blur').classList.toggle('blur');
             document.querySelector('.action').classList.toggle('blur');
             document.querySelector('.input-modal-bg').classList.toggle('show-input-modal');
+        }
+
+        function check_volume() {
+            if(document.getElementById('volume').value=='') {
+                alert('blank value')
+                document.getElementById('volume').value = blog_entry.querySelector('.volume_value').innerText;
+            }
         }
 
         function addZero(i) {
@@ -115,7 +122,7 @@
             if(icon_value=="bottle") {
                 new_entry_volume = document.createElement("div");
                 new_entry_volume.classList.add("volume");
-                new_entry_volume.innerHTML = "<a class='volume_value'>"+volume_value+"</a>ml Bottle";
+                new_entry_volume.innerHTML = "<a class='volume_value'>"+volume_value+"</a>ml  <img class='bottle' src='bottle.png'>";
                 new_entry.appendChild(new_entry_volume);
             } else {
                 new_entry_icon = document.createElement("div");
@@ -161,7 +168,7 @@
                 //add a feed entry
                 '<div class="log_entry" onclick="edit_log_entry(this);">'
                 +`<div class="time">${doc.time}</div>`
-                +`<div class="volume"><a class="volume_value">${doc.volume}</a>ml Bottle</div>`
+                +`<div class="volume"><a class="volume_value">${doc.volume}</a>ml <img class="bottle" src="bottle.png"></div>`
                 +`<div class="comment">${doc.comment}</div>`
                 +`<div class="timestamp">${doc.timestamp}</div>`
                 +`<div class="blog_date">${doc.blog_date}</div>`
@@ -216,7 +223,7 @@
                     blog_entry.querySelector('.blog_date').innerText = document.getElementById('edit_date').value;
                     close_Input_Modal();
                     refresh_log_entries();
-                    blog_entry.querySelector('.time').innerText = "trigger refresh";
+                    blog_entry.querySelector('.blog_date').innerText += '';
                 })    
                 .catch(err => {
                 });
@@ -230,7 +237,7 @@
                     blog_entry.querySelector('.blog_date').innerText = document.getElementById('edit_date').value;
                     close_Input_Modal();
                     refresh_log_entries();
-                    blog_entry.querySelector('.time').innerText = "trigger refresh";
+                    blog_entry.querySelector('.blog_date').innerText += '';
                 })    
                 .catch(err => {
                 });

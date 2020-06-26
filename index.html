@@ -29,7 +29,7 @@
             <li onclick="addEntry('bottle');"><img class="popup_icon" src='bottle.png'> Bottle</li>
             <li onclick="addEntry('nappy_dirty.png');"><img class="popup_icon" src='nappy_dirty.png'> Poopy</li>
             <li onclick="addEntry('nappy_wet.png');"><img class="popup_icon" src='nappy_wet.png'> Wet</li>
-            <li><img class="popup_icon" src='message.png'> Comment</li>
+            <li onclick="addEntry('message.png');"><img class="popup_icon" src='message.png'> Comment</li>
         </ul>
     </div>
 
@@ -38,8 +38,8 @@
         <div class="input-modal">
             <h2>Edit Log Entry</h2>
             <div id="time_and_date">
-                <input type="time" id="edit_time" name="time_entry" value="01:00">
-                <input type="date" id="edit_date" name="date_entry" value="2020-06-20">
+                <input type="time" id="edit_time" name="time_entry">
+                <input type="date" id="edit_date" name="date_entry">
             </div>
             <div id="edit_volume"><input inputmode="numeric" id="volume" pattern="[0-9]*" type="text" name="volume_entry" onfocus="this.value=''" onblur="check_volume();" value="" size ="3" maxlength="3"> ml</div>
             <div id="comments"><textarea id="edit_comment" rows="4" placeholder="Comments" maxlength="90"></textarea></div>
@@ -99,7 +99,7 @@
             var volume_value = '0';
             var comment_value = '';
             var timestamp_value = Date.now();
-            var date_value = d.getFullYear()+"-"+addZero(d.getMonth()+1)+"-"+addZero(d.getUTCDate());
+            var date_value = d.getFullYear()+"-"+addZero(d.getMonth()+1)+"-"+addZero(d.getDate());
 
             //insert new log entry into mongo { owner_id : client.auth.user.id }
             if(icon_value=="bottle") {

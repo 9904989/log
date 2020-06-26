@@ -11,59 +11,29 @@
 </head>
 <body onload="display_log_entries_on_load();">
     <div class="container" id="blur">
+        
+        <!--EVIE'S CHEEKY FACE-->
         <div class="header">
             <img class="logo" src="evie.jpg">
             <h1>Evie's Log</h1>
         </div>
+        <!--WHERE THE BLOG LIVES-->
         <div class="content" id="log_entries">
-            <!--<div class="log_entry" onclick="edit_log_entry(this);">
-                <div class="time">00:00</div>
-                <div class="volume">70ml bottle</div>
-                <div class="comment">4hrs since last feed</div>
-            </div>
-            <div class="log_entry">
-                <div class="time">00:30</div>
-                <div class="icon"><img src="nappy_dirty.png"></div>
-                <div class="comment">4.5hrs since last change</div>
-            </div>
-            <div class="log_entry">
-                <div class="time">0400</div>
-                <div class="volume">40ml bottle</div>
-                <div class="comment">4hrs since last feed</div>
-            </div>
-            <div class="log_entry">
-                <div class="time">0500</div>
-                <div class="icon"><img src="nappy_wet.png"></div>
-                <div class="comment">4.5hrs since last change</div>
-            </div>
-            <div class="log_entry">
-                <div class="time">0530</div>
-                <div class="volume">30ml bottle</div>
-                <div class="comment">4hrs since last feed</div>
-            </div>
-            <div class="log_entry">
-                <div class="time">0700</div>
-                <div class="icon"><img src="nappy_wet.png"></div>
-                <div class="comment">2hrs since last change</div>
-            </div>
-            <div class="log_entry">
-                <div class="time">1030</div>
-                <div class="volume">70ml bottle</div>
-                <div class="comment">5hrs since last feed</div>
-            </div>
-        </div>-->
         </div>
     </div>
+
+    <!--CALL TO ACTION BUTTON-->
     <div class="action" onclick="actionToggle();">
         <span>+</span>
         <ul>
-            <!--<li onclick="addEntry('bottle');">Bottle</li>-->
             <li onclick="addEntry('bottle');"><img class="popup_icon" src='bottle.png'> Bottle</li>
             <li onclick="addEntry('nappy_dirty.png');"><img class="popup_icon" src='nappy_dirty.png'> Poopy</li>
             <li onclick="addEntry('nappy_wet.png');"><img class="popup_icon" src='nappy_wet.png'> Wet</li>
             <li><img class="popup_icon" src='message.png'> Comment</li>
         </ul>
     </div>
+
+    <!--EDIT LOG ENTRY MODAL-->
     <div class="input-modal-bg">
         <div class="input-modal">
             <h2>Edit Log Entry</h2>
@@ -81,6 +51,8 @@
             <span class="input-modal-close" onclick="close_Input_Modal();">X</span>
         </div>
     </div>
+
+    <!--JAVASCRIPT-->
     <script type="text/javascript">
         const client = stitch.Stitch.initializeDefaultAppClient('evie_tracker-qprfn');
         const db = client.getServiceClient(stitch.RemoteMongoClient.factory, 'mongodb-atlas').db('log_entries');
@@ -97,6 +69,19 @@
             blur.classList.toggle('blur');
             var action = document.querySelector('.action');
             action.classList.toggle('active');
+        }
+
+        function close_Input_Modal() {
+            document.getElementById('blur').classList.toggle('blur');
+            document.querySelector('.action').classList.toggle('blur');
+            document.querySelector('.input-modal-bg').classList.toggle('show-input-modal');
+        }
+
+        function addZero(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
         }
 
     //Create new Log Entry
@@ -116,20 +101,26 @@
                 db.collection('test').insertOne({'time': time_value, 'icon': icon_value, 'comment': comment_value, 'timestamp': timestamp_value, 'blog_date': date_value });
             }
 
-            //generate DOM Elements
+            //generate DOM Elements (5x parts, time, icon/volume, comment, timestamp and date)
             new_entry = document.createElement("div");
             new_entry.classList.add("log_entry");
             new_entry.setAttribute("onclick","edit_log_entry(this);");
 
+            //time hh:mm
             new_entry_time = document.createElement("div");
             new_entry_time.classList.add("time");
             new_entry_time.innerText = time_value;
             new_entry.appendChild(new_entry_time);
 
+            //icon/volume
             if(icon_value="bottle") {
                 new_entry_volume = document.createElement("div");
                 new_entry_volume.classList.add("volume");
-                new_entry_volume.innerText = volume_value;
+                new_entry_volume_value = document.createElement("div");
+                new_entry_volume_value.classList.add("volume_value");
+                new_entry_volume_value.innerText = volume_value;
+                new_entry_volume.appendChild(new_entry_volume_value);
+                new_entry_volume.innerText = "ml Bottle";
                 new_entry.appendChild(new_entry_volume);
             } else {
                 new_entry_icon = document.createElement("div");
@@ -139,17 +130,20 @@
                 new_entry_icon.appendChild(new_icon);
                 new_entry.appendChild(new_entry_icon);
             }
+
+            //comment (maybe include a calculation of time since last change)
             new_entry_comment = document.createElement("div");
             new_entry_comment.classList.add("comment");
-            //calculate time since last change
             new_entry_comment.innerText = comment_value;
             new_entry.appendChild(new_entry_comment);
 
+            //timestamp (for finding the log entry)
             new_entry_timestamp = document.createElement("div");
             new_entry_timestamp.classList.add("timestamp");
             new_entry_timestamp.innerText = timestamp_value;
             new_entry.appendChild(new_entry_timestamp);
             
+            //date (for sorting the list)
             new_entry_date = document.createElement("div");
             new_entry_date.classList.add("blog_date");
             new_entry_date.innerText = date_value;
@@ -163,8 +157,7 @@
         //Read log entries from mongo
         function generate_log_entries() {
             db.collection('test')
-            .find({}, {limit: 1000})
-            //.sort( {"timestamp": 1} )
+            .find({}, {limit: 100, sort: {"blog_date": -1, "time": 1}})
             .toArray()
             .then(docs => {
                 const html = "";
@@ -173,7 +166,7 @@
                 //add a feed entry
                 '<div class="log_entry" onclick="edit_log_entry(this);">'
                 +`<div class="time">${doc.time}</div>`
-                +`<div class="volume">${doc.volume}</div>`
+                +`<div class="volume"><a class="volume_value">${doc.volume}</a>ml Bottle</div>`
                 +`<div class="comment">${doc.comment}</div>`
                 +`<div class="timestamp">${doc.timestamp}</div>`
                 +`<div class="blog_date">${doc.blog_date}</div>`
@@ -189,32 +182,26 @@
                 +`</div>`
                 ).join(' ');
             }).catch(err => {
-                alert("Soz mannie, I'm nae able to sort these bitches!");
             });
-        }
-
-        function addZero(i) {
-        if (i < 10) {
-            i = "0" + i;
-        }
-        return i;
         }
 
         function edit_log_entry(e) {
             e = e || window.event;
             //var src = e.target || e.srcElement;
             blog_entry = e;
-            document.getElementById('edit_time').value = e.querySelector('.time').innerText;
-            document.getElementById('edit_date').value = e.querySelector('.blog_date').innerText;
-            //document.getElementById('volume').value = e.querySelector('.comment').innerText;
-            document.getElementById('modal_timestamp').innerText = e.querySelector('.timestamp').innerText;
-            document.getElementById('edit_comment').value = e.querySelector('.comment').innerText;
-            document.getElementById('blur').classList.toggle('blur');
-            document.querySelector('.action').classList.toggle('blur');
-            document.querySelector('.input-modal-bg').classList.toggle('show-input-modal');
-        }
-
-        function close_Input_Modal() {
+            //hide the volume entry if not a bottle entry
+            if(!blog_entry.querySelector('.volume')) {
+                document.getElementById('edit_volume').classList.add('hide_volume_input_field');
+            }
+            document.getElementById('edit_time').value = blog_entry.querySelector('.time').innerText;
+            document.getElementById('edit_date').value = blog_entry.querySelector('.blog_date').innerText;
+            //if its a bottle entry, make sure the volume input is visible
+            if(blog_entry.querySelector('.volume')) {
+                document.getElementById('volume').value = blog_entry.querySelector('.volume_value').innerText;
+                document.getElementById('edit_volume').classList.remove('hide_volume_input_field');
+            }
+            document.getElementById('modal_timestamp').innerText = blog_entry.querySelector('.timestamp').innerText;
+            document.getElementById('edit_comment').value = blog_entry.querySelector('.comment').innerText;
             document.getElementById('blur').classList.toggle('blur');
             document.querySelector('.action').classList.toggle('blur');
             document.querySelector('.input-modal-bg').classList.toggle('show-input-modal');
@@ -222,18 +209,33 @@
         
         //update log entry in mongo
         function update_log_entry() {
-            db.collection('test')
-            .updateOne({"timestamp": Number(blog_entry.querySelector('.timestamp').innerText)}, {$set:{"time":document.getElementById('edit_time').value, "comment":document.getElementById('edit_comment').value, "blog_date":document.getElementById('edit_date').value}}, {upsert:true})
-            .then(() => {
-                blog_entry.querySelector('.time').innerText = document.getElementById('edit_time').value;
-                //blog_entry.querySelector('.volume').innerText = document.getElementById('volume').value;
-                blog_entry.querySelector('.comment').innerText = document.getElementById('edit_comment').value;
-                blog_entry.querySelector('.blog_date').innerText = document.getElementById('edit_date').value;
-                close_Input_Modal();
-            })    
-            .catch(err => {
-                alert("Soz mannie, I'm nae able to delete the log entry!");
-            });
+            //update the volume entry
+            if(blog_entry.querySelector('.volume')) {
+                db.collection('test')
+                .updateOne({"timestamp": Number(blog_entry.querySelector('.timestamp').innerText)}, {$set:{"time":document.getElementById('edit_time').value, "volume":document.getElementById('volume').value, "comment":document.getElementById('edit_comment').value, "blog_date":document.getElementById('edit_date').value}}, {upsert:true})
+                .then(() => {
+                    blog_entry.querySelector('.time').innerText = document.getElementById('edit_time').value;
+                    blog_entry.querySelector('.volume_value').innerText = document.getElementById('volume').value;
+                    blog_entry.querySelector('.comment').innerText = document.getElementById('edit_comment').value;
+                    blog_entry.querySelector('.blog_date').innerText = document.getElementById('edit_date').value;
+                    close_Input_Modal();
+                })    
+                .catch(err => {
+                });
+            //update the nappy entry
+            } else {
+                db.collection('test')
+                .updateOne({"timestamp": Number(blog_entry.querySelector('.timestamp').innerText)}, {$set:{"time":document.getElementById('edit_time').value, "comment":document.getElementById('edit_comment').value, "blog_date":document.getElementById('edit_date').value}}, {upsert:true})
+                .then(() => {
+                    blog_entry.querySelector('.time').innerText = document.getElementById('edit_time').value;
+                    //blog_entry.querySelector('.volume').innerText = document.getElementById('volume').value;
+                    blog_entry.querySelector('.comment').innerText = document.getElementById('edit_comment').value;
+                    blog_entry.querySelector('.blog_date').innerText = document.getElementById('edit_date').value;
+                    close_Input_Modal();
+                })    
+                .catch(err => {
+                });
+            }
         }
 
         //delete log entry from mongo
@@ -247,7 +249,6 @@
                     close_Input_Modal();
                 })    
                 .catch(err => {
-                    alert("Soz mannie, I'm nae able to delete the log entry!");
                 });
             }
         }

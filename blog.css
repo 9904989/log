@@ -60,6 +60,8 @@ h1 {
 
 .blog_date {
     display: none;
+    /*background: black;
+    color: white;*/
 }
 
 .log_entry > div > img {

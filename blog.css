@@ -82,6 +82,6 @@ h1 {
 }
 
 .volume .bottle {
-    height: 50px;
-    width: 50px;
+    width: 80%;
+    height: auto;
 }
